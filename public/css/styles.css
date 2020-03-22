@@ -1,0 +1,39 @@
+/*
+Name: Sanchita Kanade
+Class:CS648.02 Modern Full-Stack Web Development (Spring 2020)
+Assignment: 3 
+File: styles.css
+*/
+
+body                              {font-family: Arial, Helvetica, sans-serif;}
+div, label, button, input, select {font-size: 1.1em;}
+form                              {width:600px;}
+span:nth-of-type(1)               {float:left;}
+span:nth-of-type(2)               {float: right;}
+
+button{
+margin-top: 142px;
+margin-left: -176px;
+padding:5px;}
+
+input,select{
+    display: block;
+    padding:3px;
+    width:168px;
+    margin-bottom: 10px;
+}
+
+table.bordered-table th, td {
+    border: 1.5px solid black; 
+    padding: 5px;
+    width: 180px;
+    font-weight: normal;
+    font-size: 1.2em;
+    text-align: left;
+}
+
+table.bordered-table {
+    border-collapse:collapse;     
+    margin:30px 0;
+}
+

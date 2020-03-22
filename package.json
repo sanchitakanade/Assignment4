@@ -1,0 +1,33 @@
+{
+  "name": "assignment4",
+  "version": "1.0.0",
+  "description": "MongoDB Create/Read operations",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel src --presets @babel/react --out-dir public",
+    "watch": "babel src --presets @babel/react --out-dir public --watch --verbose",
+    "start": "nodemon -w server -e js,graphql server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanchitakanade/assignment4.git"
+  },
+  "author": "Sanchita Kanade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanchitakanade/assignment4/issues"
+  },
+  "homepage": "https://github.com/sanchitakanade/assignment4#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.11.0",
+    "express": "^4.17.1",
+    "graphql": "^0.13.2",
+    "nodemon": "^1.19.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-react": "^7.9.1"
+  }
+}
