@@ -1,6 +1,6 @@
 /* Name: Sanchita Kanade
    Class:CS648.02 Modern Full-Stack Web Development (Spring 2020)
-   Assignment: 3
+   Assignment: 4
    File: App.jsx
 */
 /* eslint "react/react-in-jsx-scope": "off" */
@@ -19,7 +19,7 @@ async function graphQLFetch(query, variables = {}) {
     });
     const body = await response.text();
     const result = JSON.parse(body);
-    if(result.errors) {
+    if (result.errors) {
       const error = result.errors[0];
       if (error.extensions.code === 'BAD_USER_INPUT') {
         const details = error.extensions.exception.errors.join('\n ');
@@ -93,22 +93,30 @@ class ProductAdd extends React.Component {
     return (
       <form name="productAdd" onSubmit={this.handleSubmit}>
         <span>
-          <label>Category </label>
-          <select name="Category">
-            <option>Shirts</option>
-            <option>Jeans</option>
-            <option>Jackets</option>
-            <option>Sweaters</option>
-            <option>Accessories</option>
-          </select>
-          <label>Product Name </label>
-          <input type="text" name="Name"/> 
+          <label htmlFor="productCategory">
+            Category
+            <select name="Category" id="productCategory">
+              <option>Shirts</option>
+              <option>Jeans</option>
+              <option>Jackets</option>
+              <option>Sweaters</option>
+              <option>Accessories</option>
+            </select>
+          </label>
+          <label htmlFor="name">
+            Product Name
+            <input type="text" name="Name" id="name" />
+          </label>
         </span>
         <span>
-          <label>Price Per Unit</label>
-          <input type="text" name="Price"/>
-          <label>Image URL </label>
-          <input type="url" name="Image" id="image"/>
+          <label htmlFor="price">
+            Price Per Unit
+            <input type="text" name="Price" id="price" />
+          </label>
+          <label htmlFor="image">
+            Image URL
+            <input type="url" name="Image" id="image" />
+          </label>
         </span>
         <button type="submit">Add Product</button>
       </form>
