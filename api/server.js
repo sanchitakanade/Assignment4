@@ -4,13 +4,38 @@ Class:CS648.02 Modern Full-Stack Web Development (Spring 2020)
 Assignment: 3
 File: server.js
 */
+/* eslint linebreak-style: ["error", "windows"] */
+
 const fs = require('fs');
 const express = require('express');
+require('dotenv').config();
 const { ApolloServer } = require('apollo-server-express');
 const { MongoClient } = require('mongodb');
-const url = 'mongodb+srv://sanchita:Mayureshwar123@nodeproject-fuurm.mongodb.net/CS649FullStackDevelopment?retryWrites=true&w=majority';
+
+const url = process.env.DB_URL || 'mongodb+srv://sanchita:Mayureshwar123@nodeproject-fuurm.mongodb.net/CS649FullStackDevelopment?retryWrites=true&w=majority';
+const port = process.env.API_SERVER_PORT || 3000;
 
 let db;
+
+async function getNextSequence(name) {
+  const result = await db.collection('counters').findOneAndUpdate({ _id: name }, { $inc: { current: 1 } }, { returnOriginal: false });
+  return result.value.current;
+}
+// API to add product
+async function addProduct(_, { product }) {
+  const newProduct = Object.assign({}, product);
+  newProduct.id = await getNextSequence('productsConter');
+  const result = await db.collection('inventory').insertOne(newProduct);
+  const savedProduct = await db.collection('inventory')
+    .findOne({ _id: result.insertedId });
+  return savedProduct;
+}
+
+// API to retrieve product
+async function productList() {
+  const products = await db.collection('inventory').find({}).toArray();
+  return products;
+}
 
 const resolvers = {
   Query: {
@@ -21,20 +46,6 @@ const resolvers = {
   },
 };
 
-//API to add product
-async function addProduct(_, { product }) {
-  product.id = await getNextSequence('productsConter');
-  const result = await db.collection('inventory').insertOne(product);
-  const savedProduct = await db.collection('inventory')
-    .findOne({ _id: result.insertedId });
-  return savedProduct;
-}
-
-//API to retrieve product
-async function productList() {
-  const products = await db.collection('inventory').find({}).toArray();
-  return products;
-}
 
 async function connectToDb() {
   const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -43,31 +54,21 @@ async function connectToDb() {
   db = client.db();
 }
 
-async function getNextSequence(name) {  
-  const result = await db.collection('counters')
-  .findOneAndUpdate({ _id: name }, { $inc: { current: 1 } }, { returnOriginal: false },);
-  return result.value.current;
-}
-
 const server = new ApolloServer({
-  typeDefs: fs.readFileSync('./server/schema.graphql', 'utf-8'),
+  typeDefs: fs.readFileSync('schema.graphql', 'utf-8'),
   resolvers,
 });
 
 const app = express();
-app.use(express.static('public'));
 server.applyMiddleware({ app, path: '/graphql' });
-// app.listen(3000, function () {
-//   console.log('App started on port 3000');
-// });
 
-(async function() {
+(async function start() {
   try {
     await connectToDb();
-    app.listen(3000, function () {
-      console.log('App started on port 3000');
+    app.listen(port, () => {
+      console.log(`API server started on port ${port}`);
     });
-  }catch (err) {
+  } catch (err) {
     console.log('ERROR:', err);
   }
-})();
+}());

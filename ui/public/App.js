@@ -1,14 +1,23 @@
-{
-  /*Name: Sanchita Kanade
-    Class:CS648.02 Modern Full-Stack Web Development (Spring 2020)
-    Assignment: 3
-    File: App.jsx
-  */
-}
+/* Name: Sanchita Kanade
+   Class:CS648.02 Modern Full-Stack Web Development (Spring 2020)
+   Assignment: 3
+   File: App.jsx
+*/
 
+/* eslint "react/react-in-jsx-scope": "off" */
+
+/* globals React ReactDOM */
+
+/* eslint "react/jsx-no-undef": "off" */
+
+/* eslint "react/no-multi-comp": "off" */
+
+/* eslint "no-alert": "off" */
+
+/* eslint linebreak-style: ["error", "windows"] */
 async function graphQLFetch(query, variables = {}) {
   try {
-    const response = await fetch('/graphql', {
+    const response = await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -24,7 +33,7 @@ async function graphQLFetch(query, variables = {}) {
     if (result.errors) {
       const error = result.errors[0];
 
-      if (error.extensions.code == 'BAD_USER_INPUT') {
+      if (error.extensions.code === 'BAD_USER_INPUT') {
         const details = error.extensions.exception.errors.join('\n ');
         alert(`${error.message}:\n ${details}`);
       } else {
@@ -35,19 +44,24 @@ async function graphQLFetch(query, variables = {}) {
     return result.data;
   } catch (e) {
     alert(`Error in sending data to server: ${e.message}`);
+    return null;
   }
 }
 
-function ProductRow(props) {
-  const product = props.product;
-  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, product.Name), /*#__PURE__*/React.createElement("td", null, "$".concat(product.Price)), /*#__PURE__*/React.createElement("td", null, product.Category), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("a", {
+function ProductRow({
+  product
+}) {
+  return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, product.Name), /*#__PURE__*/React.createElement("td", null, '$'.concat(product.Price)), /*#__PURE__*/React.createElement("td", null, product.Category), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("a", {
     href: product.Image,
-    target: "_blank"
+    target: "_blank",
+    rel: "noopener noreferrer"
   }, "View")));
 }
 
-function ProductTable(props) {
-  const productrows = props.products.map(product => /*#__PURE__*/React.createElement(ProductRow, {
+function ProductTable({
+  products
+}) {
+  const productrows = products.map(product => /*#__PURE__*/React.createElement(ProductRow, {
     key: product.id,
     product: product
   }));
@@ -63,21 +77,24 @@ class ProductAdd extends React.Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
     const form = document.forms.productAdd;
-    var price = form.Price.value;
-    var newPrice = price.substr(1, price.length);
+    const price = form.Price.value;
+    const newPrice = price.substr(1, price.length);
+    e.preventDefault();
     const product = {
       Category: form.Category.value,
       Price: newPrice,
       Name: form.Name.value,
-      Image: document.getElementById("image").value
+      Image: document.getElementById('image').value
     };
-    this.props.createProduct(product);
-    form.Category.value = "Shirts";
-    form.Price.value = "$";
-    form.Name.value = "";
-    form.Image.value = "";
+    const {
+      createProduct
+    } = this.props;
+    createProduct(product);
+    form.Category.value = 'Shirts';
+    form.Price.value = '$';
+    form.Name.value = '';
+    form.Image.value = '';
   }
 
   render() {
@@ -96,7 +113,9 @@ class ProductAdd extends React.Component {
       type: "url",
       name: "Image",
       id: "image"
-    })), /*#__PURE__*/React.createElement("button", null, "Add Product"));
+    })), /*#__PURE__*/React.createElement("button", {
+      type: "submit"
+    }, "Add Product"));
   }
 
 }
@@ -113,7 +132,7 @@ class ProductList extends React.Component {
 
   componentDidMount() {
     this.list();
-    document.forms.productAdd.Price.value = "$";
+    document.forms.productAdd.Price.value = '$';
   }
 
   async createProduct(product) {
@@ -148,8 +167,11 @@ class ProductList extends React.Component {
   }
 
   render() {
+    const {
+      products
+    } = this.state;
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", null, "My Company Inventory"), /*#__PURE__*/React.createElement("div", null, "Showing all available products"), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(ProductTable, {
-      products: this.state.products
+      products: products
     }), /*#__PURE__*/React.createElement("div", null, "Add a new product to inventory"), /*#__PURE__*/React.createElement("hr", null), /*#__PURE__*/React.createElement(ProductAdd, {
       createProduct: this.createProduct
     }));

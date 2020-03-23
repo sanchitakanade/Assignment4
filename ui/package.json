@@ -1,0 +1,38 @@
+{
+  "name": "assignment4-ui",
+  "version": "1.0.0",
+  "description": "MongoDB Create/Read operations-ui",
+  "main": "index.js",
+  "scripts": {
+    "compile": "babel src --presets @babel/react --out-dir public",
+    "watch": "babel src --presets @babel/react --out-dir public --watch --verbose",
+    "lint": "eslint . --ext js,jsx --ignore-pattern public",
+    "start": "nodemon -w uiserver.js -w .env uiserver.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanchitakanade/assignment4.git"
+  },
+  "author": "Sanchita Kanade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanchitakanade/assignment4/issues"
+  },
+  "homepage": "https://github.com/sanchitakanade/assignment4#readme",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.9.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0"
+  }
+}
