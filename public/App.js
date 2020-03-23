@@ -121,13 +121,7 @@ class ProductList extends React.Component {
       addProduct(product: $product) {
         id
       } 
-    }`; // const response = await fetch('/graphql', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json'},
-    //   body: JSON.stringify({ query, variables: {product} })
-    // });
-    // this.list();
-
+    }`;
     const data = await graphQLFetch(query, {
       product
     });
@@ -143,14 +137,7 @@ class ProductList extends React.Component {
         id Category Name Price
         Image
       }
-    }`; // const response = await fetch('/graphql', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json'},
-    //   body: JSON.stringify({ query })
-    // });
-    // const result = await response.json();
-    // this.setState({ products: result.data.productList });
-
+    }`;
     const data = await graphQLFetch(query);
 
     if (data) {
