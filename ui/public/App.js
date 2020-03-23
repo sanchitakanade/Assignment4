@@ -1,6 +1,6 @@
 /* Name: Sanchita Kanade
    Class:CS648.02 Modern Full-Stack Web Development (Spring 2020)
-   Assignment: 3
+   Assignment: 4
    File: App.jsx
 */
 
@@ -101,19 +101,30 @@ class ProductAdd extends React.Component {
     return /*#__PURE__*/React.createElement("form", {
       name: "productAdd",
       onSubmit: this.handleSubmit
-    }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("label", null, "Category "), /*#__PURE__*/React.createElement("select", {
-      name: "Category"
-    }, /*#__PURE__*/React.createElement("option", null, "Shirts"), /*#__PURE__*/React.createElement("option", null, "Jeans"), /*#__PURE__*/React.createElement("option", null, "Jackets"), /*#__PURE__*/React.createElement("option", null, "Sweaters"), /*#__PURE__*/React.createElement("option", null, "Accessories")), /*#__PURE__*/React.createElement("label", null, "Product Name "), /*#__PURE__*/React.createElement("input", {
+    }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "productCategory"
+    }, "Category", /*#__PURE__*/React.createElement("select", {
+      name: "Category",
+      id: "productCategory"
+    }, /*#__PURE__*/React.createElement("option", null, "Shirts"), /*#__PURE__*/React.createElement("option", null, "Jeans"), /*#__PURE__*/React.createElement("option", null, "Jackets"), /*#__PURE__*/React.createElement("option", null, "Sweaters"), /*#__PURE__*/React.createElement("option", null, "Accessories"))), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "name"
+    }, "Product Name", /*#__PURE__*/React.createElement("input", {
       type: "text",
-      name: "Name"
-    })), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("label", null, "Price Per Unit"), /*#__PURE__*/React.createElement("input", {
+      name: "Name",
+      id: "name"
+    }))), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("label", {
+      htmlFor: "price"
+    }, "Price Per Unit", /*#__PURE__*/React.createElement("input", {
       type: "text",
-      name: "Price"
-    }), /*#__PURE__*/React.createElement("label", null, "Image URL "), /*#__PURE__*/React.createElement("input", {
+      name: "Price",
+      id: "price"
+    })), /*#__PURE__*/React.createElement("label", {
+      htmlFor: "image"
+    }, "Image URL", /*#__PURE__*/React.createElement("input", {
       type: "url",
       name: "Image",
       id: "image"
-    })), /*#__PURE__*/React.createElement("button", {
+    }))), /*#__PURE__*/React.createElement("button", {
       type: "submit"
     }, "Add Product"));
   }
